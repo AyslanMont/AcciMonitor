@@ -1,6 +1,7 @@
 from tkinter import *
-from tkinter.ttk import *
+from tkinter.ttk import Combobox
 from tkinter import filedialog
+from tkcalendar import Calendar, DateEntry
 import sqlite3
 import pickle
 import json
@@ -11,7 +12,8 @@ class App:
         self.janela = Tk()
         self.janela.title("AcciMonitor")
         self.janela.iconbitmap("assets/imgs/acidente.ico")
-        self.janela.geometry("800x600")
+        self.janela.geometry("600x600+500+100")
+        self.janela.resizable(False, False)
 
         #Cores 
 
@@ -42,7 +44,7 @@ class App:
 
         self.Label_Data = Label(self.janela, text="Data", background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
         self.Label_Data.place(x=50, y=70, width=60, height=25)
-        self.Entry_data = Entry(self.janela)
+        self.Entry_data = DateEntry(self.janela)  
         self.Entry_data.place(x=120, y=70, width=175, height=25)
         
         #Informações -- Hora
@@ -67,6 +69,7 @@ class App:
         self.Label_Gravidade.place(x=50, y=160,width=200, height=25)
         self.Entry_Gravidade = Combobox(self.janela, values=self.Opcoes_de_Categoria, font="Arial 10")
         self.Entry_Gravidade.place(x=50, y=195,width=200, height=25)
+        self.Entry_Gravidade.set("Colisões")
 
         #Informações -- Descrição
         self.Label_Descricao = Label(self.janela,text="Descrição",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
@@ -76,37 +79,23 @@ class App:
 
         #Informações -- Fotos
 
-        self.Label_Imagem = Label(self.janela)
-        self.Label_Imagem.place(x=50, y=400)
-        self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem)
-        self.botao_Anexar_Imagem.place(x=500, y=400)
+        """self.Label_Imagem = Label(self.janela)
+        self.Label_Imagem.place(x=50, y=400)"""
+        self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15")
+        self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=30)
 
+        #Informações -- Botão Registrar
+
+        self.botao_Registrar = Button(self.janela, text="Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15")
+        self.botao_Registrar.place(x=260, y=420,width=290, height=30)
 
         self.janela.mainloop()
 
     def Exibir_Aba_Cadastro(self):
-
-        self.Canvas_background = Canvas(self.janela, background="Gray")
-        self.Canvas_background.pack(fill="both", expand=True)
-
-        #Menu Principal
-        self.Menu_Principal = Menu(self.janela)
-        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
-        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
-
-        self.janela.config(menu=self.Menu_Principal)
+        pass
         
     def Exibir_Aba_Consulta(self):
-
-        self.Canvas_background = Canvas(self.janela, background="Gray")
-        self.Canvas_background.pack(fill="both", expand=True)
-
-        #Menu Principal
-        self.Menu_Principal = Menu(self.janela)
-        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
-        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
-
-        self.janela.config(menu=self.Menu_Principal)
+        pass
 
     def Limpar_Tela(self):
         for widget in self.janela.winfo_children():
@@ -114,14 +103,6 @@ class App:
 
     def Selecionar_Imagem(self):
         arquivo = filedialog.askopenfilename(filetypes=[("Imagens", "*.png;*.jpg;*.jpeg")])
-        if arquivo:
-            Imagem = Image.open(arquivo)
-            #Imagem = Image.thumbnail((400,300))
-            photo = ImageTk.PhotoImage(Imagem)
-            self.Label_Imagem.config(image=photo)
-            self.Label_Imagem.image = photo
-
-
 
 if __name__ == "__main__":
     EXECUCAO = App()
