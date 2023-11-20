@@ -78,16 +78,17 @@ class App:
         self.Entry_Descricao.place(x=260, y=195,width=290, height=200)
 
         #Informações -- Fotos
-
-        """self.Label_Imagem = Label(self.janela)
-        self.Label_Imagem.place(x=50, y=400)"""
+        self.ImageCarregada_anexar = PhotoImage(file='rk_01.png').subsample(2)
+        self.Label_Imagem = Label(self.janela, image=self.ImageCarregada_anexar)
+        self.Label_Imagem.place(x=50, y=400)
         self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15")
-        self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=30)
+        self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=40)
 
         #Informações -- Botão Registrar
 
-        self.botao_Registrar = Button(self.janela, text="Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15")
-        self.botao_Registrar.place(x=260, y=420,width=290, height=30)
+        self.Image_Carregada = PhotoImage(file='assets/imgs/logo.png')
+        self.botao_Registrar = Button(self.janela, text=" Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left')
+        self.botao_Registrar.place(x=260, y=420,width=290, height=40)
 
         self.janela.mainloop()
 
@@ -103,6 +104,9 @@ class App:
 
     def Selecionar_Imagem(self):
         arquivo = filedialog.askopenfilename(filetypes=[("Imagens", "*.png;*.jpg;*.jpeg")])
+
+        
+        self.Label_Imagem = Label(self.janela,image=ImageCarregada_anexar)
 
 if __name__ == "__main__":
     EXECUCAO = App()
