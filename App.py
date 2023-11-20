@@ -81,7 +81,8 @@ class App:
         self.ImageCarregada_anexar = PhotoImage(file='assets/imgs/acidente_png.png').subsample(3,3)
         self.Label_Imagem = Label(self.janela, image=self.ImageCarregada_anexar)
         self.Label_Imagem.place(x=65, y=230)
-        self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15")
+        self.ImageCarregada_anexar_logo =  PhotoImage(file='assets/imgs/upload.png')
+        self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15",image=self.ImageCarregada_anexar_logo,compound = 'left')
         self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=40)
 
         #Informações -- Botão Registrar
@@ -108,6 +109,6 @@ class App:
 
         self.ImageCarregada_anexar = PhotoImage(file=arquivo).subsample(3,3)
         self.Label_Imagem.config(image=self.Image_Carregada)
-        
+
 if __name__ == "__main__":
     EXECUCAO = App()
