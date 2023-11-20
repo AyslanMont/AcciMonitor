@@ -78,9 +78,9 @@ class App:
         self.Entry_Descricao.place(x=260, y=195,width=290, height=200)
 
         #Informações -- Fotos
-        self.ImageCarregada_anexar = PhotoImage(file='rk_01.png').subsample(2)
+        self.ImageCarregada_anexar = PhotoImage(file='assets/imgs/acidente_png.png').subsample(3,3)
         self.Label_Imagem = Label(self.janela, image=self.ImageCarregada_anexar)
-        self.Label_Imagem.place(x=50, y=400)
+        self.Label_Imagem.place(x=65, y=230)
         self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15")
         self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=40)
 
@@ -103,10 +103,11 @@ class App:
             widget.destroy()
 
     def Selecionar_Imagem(self):
+
         arquivo = filedialog.askopenfilename(filetypes=[("Imagens", "*.png;*.jpg;*.jpeg")])
 
+        self.ImageCarregada_anexar = PhotoImage(file=arquivo).subsample(3,3)
+        self.Label_Imagem.config(image=self.Image_Carregada)
         
-        self.Label_Imagem = Label(self.janela,image=ImageCarregada_anexar)
-
 if __name__ == "__main__":
     EXECUCAO = App()
