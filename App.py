@@ -107,8 +107,8 @@ class App:
 
         arquivo = filedialog.askopenfilename(filetypes=[("Imagens", "*.png;*.jpg;*.jpeg")])
 
-        self.ImageCarregada_anexar = PhotoImage(file=arquivo).subsample(3,3)
-        self.Label_Imagem.config(image=self.Image_Carregada)
+        self.ImageCarregada_anexar = PhotoImage(file=arquivo)#.subsample(3,3)
+        self.Label_Imagem.config(image=self.ImageCarregada_anexar)
 
 if __name__ == "__main__":
     EXECUCAO = App()
