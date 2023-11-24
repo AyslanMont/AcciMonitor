@@ -35,6 +35,23 @@ class App:
 
         self.janela.config(menu=self.Menu_Principal)
 
+        #Tela Inicial
+
+        self.Criar_Layout_Cadastro()  
+
+        self.janela.mainloop()
+    
+    def Criar_Layout_Cadastro(self):
+
+        self.Canvas_background = Canvas(self.janela, background=self.Background_da_Janela)
+        self.Canvas_background.pack(fill="both", expand=True)
+
+        #Menu Principal
+        self.Menu_Principal = Menu(self.janela)
+        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
+        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
+
+        self.janela.config(menu=self.Menu_Principal)
         #Informações
 
         self.Label_Titulo_Informacoes = Label(self.janela, text="Informações", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
@@ -65,11 +82,11 @@ class App:
         #Informações -- Categoria
 
         self.Opcoes_de_Categoria = ["Colisões","Queda", "Incêndio", "Explosão", "Outro"]
-        self.Label_Gravidade = Label(self.janela,text="Gravidade",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
-        self.Label_Gravidade.place(x=50, y=160,width=200, height=25)
-        self.Entry_Gravidade = Combobox(self.janela, values=self.Opcoes_de_Categoria, font="Arial 10")
-        self.Entry_Gravidade.place(x=50, y=195,width=200, height=25)
-        self.Entry_Gravidade.set("Colisões")
+        self.Label_Categoria = Label(self.janela,text="Categoria",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Categoria.place(x=50, y=160,width=200, height=25)
+        self.Entry_Categoria = Combobox(self.janela, values=self.Opcoes_de_Categoria, font="Arial 10")
+        self.Entry_Categoria.place(x=50, y=195,width=200, height=25)
+        self.Entry_Categoria.set("Colisões")
 
         #Informações -- Descrição
         self.Label_Descricao = Label(self.janela,text="Descrição",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
@@ -87,17 +104,29 @@ class App:
 
         #Informações -- Botão Registrar
 
-        self.Image_Carregada = PhotoImage(file='assets/imgs/logo.png')
+        self.Image_Carregada = PhotoImage(file='assets/imgs/logo_botao_registrar.png')
         self.botao_Registrar = Button(self.janela, text=" Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left')
         self.botao_Registrar.place(x=260, y=420,width=290, height=40)
 
-        self.janela.mainloop()
+    def Criar_Layout_Consulta(self):
+        self.Canvas_background = Canvas(self.janela, background=self.Background_da_Janela)
+        self.Canvas_background.pack(fill="both", expand=True)
 
+        #Menu Principal
+        self.Menu_Principal = Menu(self.janela)
+        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
+        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
+
+        self.janela.config(menu=self.Menu_Principal)
+
+    
     def Exibir_Aba_Cadastro(self):
-        pass
-        
+        self.Limpar_Tela()
+        self.Criar_Layout_Cadastro ()
+    
     def Exibir_Aba_Consulta(self):
-        pass
+        self.Limpar_Tela()
+        self.Criar_Layout_Consulta()
 
     def Limpar_Tela(self):
         for widget in self.janela.winfo_children():
