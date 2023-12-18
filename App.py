@@ -4,8 +4,6 @@ from tkinter import filedialog
 from tkcalendar import Calendar, DateEntry
 import sqlite3
 import pickle
-import json
-from PIL import ImageTk, Image
 
 class App:
     def __init__(self):
@@ -94,14 +92,6 @@ class App:
         self.Entry_Descricao = Text(self.janela)
         self.Entry_Descricao.place(x=260, y=195,width=290, height=200)
 
-        #Informações -- Fotos
-        self.ImageCarregada_anexar = PhotoImage(file='assets/imgs/acidente_png.png').subsample(3,3)
-        self.Label_Imagem = Label(self.janela, image=self.ImageCarregada_anexar)
-        self.Label_Imagem.place(x=65, y=230)
-        self.ImageCarregada_anexar_logo =  PhotoImage(file='assets/imgs/upload.png')
-        self.botao_Anexar_Imagem = Button(self.janela, text="Anexar Imagem", command=self.Selecionar_Imagem, background=self.Amarelo_Alerta, font="Arial 15",image=self.ImageCarregada_anexar_logo,compound = 'left')
-        self.botao_Anexar_Imagem.place(x=50, y=420,width=200, height=40)
-
         #Informações -- Botão Registrar
 
         self.Image_Carregada = PhotoImage(file='assets/imgs/logo_botao_registrar.png')
@@ -131,13 +121,6 @@ class App:
     def Limpar_Tela(self):
         for widget in self.janela.winfo_children():
             widget.destroy()
-
-    def Selecionar_Imagem(self):
-
-        arquivo = filedialog.askopenfilename(filetypes=[("Imagens", "*.png;*.jpg;*.jpeg")])
-
-        self.ImageCarregada_anexar = PhotoImage(file=arquivo)#.subsample(3,3)
-        self.Label_Imagem.config(image=self.ImageCarregada_anexar)
 
 if __name__ == "__main__":
     EXECUCAO = App()
