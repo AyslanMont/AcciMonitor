@@ -180,7 +180,7 @@ class App:
 
         #Informações -- Botão Registrar
 
-        self.Image_Carregada = PhotoImage(file='assets/imgs/logo_botao_registrar.png')
+        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
         self.botao_Registrar = Button(self.janela, text=" Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left')
         self.botao_Registrar.place(x=150, y=500,width=300, height=40)
 
