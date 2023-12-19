@@ -87,7 +87,7 @@ class App:
         self.Entry_Descricao.place(x=260, y=195,width=290, height=105)
 
         self.Image_Carregada = PhotoImage(file='assets/imgs/logo_botao_registrar.png')
-        self.botao_Registrar = Button(self.janela, text=" Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left')
+        self.botao_Registrar = Button(self.janela, text=" Registrar", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Registrando)
         self.botao_Registrar.place(x=150, y=320,width=300, height=40)
 
     def Criar_Layout_Consulta(self):
@@ -192,6 +192,28 @@ class App:
             self.Entry_Gravidade.config(state='disabled')
         else:
             self.Entry_Gravidade.config(state='normal')
+
+    def Registrando (self):
+
+        con = sqlite3.connect("Registro_de_Acidentes.db")
+        banco = con.cursor()
+
+        Valor_Data = self.Entry_data.get()
+        Valor_Local = self.Entry_Local.get()
+        Valor_Hora = self.Entry_Hora.get()
+        Valor_Categoria = self.Entry_Categoria.get()
+        Valor_Gravidade = self.Entry_Gravidade.get()
+        Valor_Descricao= self.Entry_Descricao.get("1.0", "end-1c")
+
+        arquivo = open("Arquivo_de_Registros_binario.bin",'wb')
+
+        pickle.dump(Valor_Data,arquivo)
+        pickle.dump(Valor_Local,arquivo)
+        pickle.dump(Valor_Hora,arquivo)
+        pickle.dump(Valor_Categoria,arquivo)
+        pickle.dump(Valor_Gravidade,arquivo)
+        pickle.dump(Valor_Descricao,arquivo)
+        arquivo.close()     
 
 
 if __name__ == "__main__":
