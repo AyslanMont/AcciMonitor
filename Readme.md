@@ -1,2 +1,2 @@
 Sistema de Registro e Monitoramento de Acidentes
-Este sistema foi desenvolvido para facilitar o registro e o monitoramento de acidentes ocorridos em um determinado ambiente. Com uma interface intuitiva e amigável, permite que os usuários registrem informações relevantes sobre acidentes, como local, data, tipo de acidente e pessoas envolvidas.É uma ferramenta essencial para promover a segurança e o bem-estar dos envolvidos.
+Este sistema foi desenvolvido para facilitar o registro e o monitoramento de acidentes ocorridos em um determinado ambiente. Com uma interface intuitiva e amigável, permite que os usuários registrem informações relevantes sobre acidentes, como local, data, tipo de acidente e pessoas envolvidas. 
