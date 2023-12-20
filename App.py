@@ -44,8 +44,8 @@ class App:
         self.Canvas_background.pack(fill="both", expand=True)
 
         self.Menu_Principal = Menu(self.janela)
-        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
-        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
+        self.Menu_Principal.add_command(label="Cadastro", command=self.Exibir_Aba_Cadastro)
+        self.Menu_Principal.add_command(label="Consulta", command=self.Exibir_Aba_Consulta)
 
         self.janela.config(menu=self.Menu_Principal)
 
@@ -152,8 +152,8 @@ class App:
         self.Entry_Gravidade.set("Ileso")
 
         self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
-        self.botao_Registrar = Button(self.janela, text="Consultar", background=self.Branco,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left')
-        self.botao_Registrar.place(x=150, y=320,width=300, height=40)
+        self.botao_Consultar = Button(self.janela, text="Consultar", background=self.Branco,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Consultando)
+        self.botao_Consultar.place(x=150, y=320,width=300, height=40)
 
     def Exibir_Aba_Cadastro(self):
         self.Limpar_Tela()
@@ -198,12 +198,16 @@ class App:
         con = sqlite3.connect("Registro_de_Acidentes.db")
         banco = con.cursor()
 
-        Valor_Data = self.Entry_data.get()
-        Valor_Local = self.Entry_Local.get()
-        Valor_Hora = self.Entry_Hora.get()
-        Valor_Categoria = self.Entry_Categoria.get()
-        Valor_Gravidade = self.Entry_Gravidade.get()
-        Valor_Descricao= self.Entry_Descricao.get("1.0", "end-1c")
+        try:
+            Valor_Data = self.Entry_data.get()
+            Valor_Local = self.Entry_Local.get()
+            Valor_Hora = self.Entry_Hora.get()
+            Valor_Categoria = self.Entry_Categoria.get()
+            Valor_Gravidade = self.Entry_Gravidade.get()
+            Valor_Descricao= self.Entry_Descricao.get("1.0", "end-1c")
+
+        except ValueError:
+            messagebox.showinfo("Notificação", "Ocorreu um erro")
 
         Dados_Serializados = {"Data":Valor_Data,"Local": Valor_Local,"Hora":Valor_Hora, "Categoria":Valor_Categoria, "Gravidade":Valor_Gravidade,"Descricao":Valor_Descricao}
 
@@ -214,5 +218,16 @@ class App:
         banco.execute("INSERT INTO Registros VALUES (?,?,?,?,?,?)", (Valor_Data, Valor_Local, Valor_Hora, Valor_Categoria, Valor_Gravidade, Valor_Descricao))
         con.commit()
         con.close()
+
+    def Consultando (self):
+        pass
+
+    def Verifica_Hora(self):
+        pass
+
+    def Verifica_Local(self):
+        pass
+     
+
 if __name__ == "__main__":
-    EXECUCAO = App()
+    EXECUCAO = App() 
