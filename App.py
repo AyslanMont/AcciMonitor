@@ -74,7 +74,7 @@ class App:
         self.Entry_Categoria.place(x=50, y=195,width=200, height=25)
         self.Entry_Categoria.set("Colisões")
 
-        self.Opcoes_de_Gravidade = ["Ileso", "Ferido leve", "Ferido grave", "Forto"]
+        self.Opcoes_de_Gravidade = ["Ileso", "Ferido leve", "Ferido grave", "Morto"]
         self.Label_Gravidade = Label(self.janela,text="Gravidade",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
         self.Label_Gravidade.place(x=50, y=240,width=200, height=25)
         self.Entry_Gravidade = Combobox(self.janela, values=self.Opcoes_de_Gravidade, font="Arial 10")
@@ -144,7 +144,7 @@ class App:
         self.Entry_Categoria.place(x=50, y=245,width=240, height=25)
         self.Entry_Categoria.set("Colisões")
 
-        self.Opcoes_de_Gravidade = ["Ileso", "Ferido leve", "Ferido grave", "Forto"]
+        self.Opcoes_de_Gravidade = ["Ileso", "Ferido leve", "Ferido grave", "Morto"]
         self.Label_Gravidade = Label(self.janela,text="Gravidade",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
         self.Label_Gravidade.place(x=310, y=210,width=240, height=25)
         self.Entry_Gravidade = Combobox(self.janela, values=self.Opcoes_de_Gravidade, font="Arial 10")
@@ -205,16 +205,14 @@ class App:
         Valor_Gravidade = self.Entry_Gravidade.get()
         Valor_Descricao= self.Entry_Descricao.get("1.0", "end-1c")
 
-        arquivo = open("Arquivo_de_Registros_binario.bin",'wb')
+        Dados_Serializados = {"Data":Valor_Data,"Local": Valor_Local,"Hora":Valor_Hora, "Categoria":Valor_Categoria, "Gravidade":Valor_Gravidade,"Descricao":Valor_Descricao}
 
-        pickle.dump(Valor_Data,arquivo)
-        pickle.dump(Valor_Local,arquivo)
-        pickle.dump(Valor_Hora,arquivo)
-        pickle.dump(Valor_Categoria,arquivo)
-        pickle.dump(Valor_Gravidade,arquivo)
-        pickle.dump(Valor_Descricao,arquivo)
-        arquivo.close()     
+        arquivo = open("Arquivo_de_Registros_binario.bin",'ab')
+        pickle.dump(Dados_Serializados, arquivo)
+        arquivo.close()
 
-
+        banco.execute("INSERT INTO Registros VALUES (?,?,?,?,?,?)", (Valor_Data, Valor_Local, Valor_Hora, Valor_Categoria, Valor_Gravidade, Valor_Descricao))
+        con.commit()
+        con.close()
 if __name__ == "__main__":
     EXECUCAO = App()
