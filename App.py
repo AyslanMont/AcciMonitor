@@ -1,6 +1,6 @@
 from tkinter import *
+from tkinter import messagebox
 from tkinter.ttk import Combobox, Checkbutton
-from tkinter import filedialog
 from tkcalendar import Calendar, DateEntry
 import sqlite3
 import pickle
@@ -206,27 +206,48 @@ class App:
             Valor_Gravidade = self.Entry_Gravidade.get()
             Valor_Descricao= self.Entry_Descricao.get("1.0", "end-1c")
 
-        except ValueError:
-            messagebox.showinfo("Notificação", "Ocorreu um erro")
+            self.Verifica_Hora(Valor_Hora)
+            self.Verifica_Local(Valor_Local)
 
-        Dados_Serializados = {"Data":Valor_Data,"Local": Valor_Local,"Hora":Valor_Hora, "Categoria":Valor_Categoria, "Gravidade":Valor_Gravidade,"Descricao":Valor_Descricao}
+        except Exception as err:
+            messagebox.showinfo("Formato inválido", f"{err}")
 
-        arquivo = open("Arquivo_de_Registros_binario.bin",'ab')
-        pickle.dump(Dados_Serializados, arquivo)
-        arquivo.close()
+        else:
 
-        banco.execute("INSERT INTO Registros VALUES (?,?,?,?,?,?)", (Valor_Data, Valor_Local, Valor_Hora, Valor_Categoria, Valor_Gravidade, Valor_Descricao))
-        con.commit()
-        con.close()
+            Dados_Serializados = {"Data":Valor_Data,
+            "Local": Valor_Local,
+            "Hora":Valor_Hora,
+            "Categoria":Valor_Categoria,
+            "Gravidade":Valor_Gravidade,
+            "Descricao":Valor_Descricao
+            }
+
+            arquivo = open("Arquivo_de_Registros_binario.bin",'ab')
+            pickle.dump(Dados_Serializados, arquivo)
+            arquivo.close()
+
+            banco.execute("INSERT INTO Registros VALUES (?,?,?,?,?,?)", (Valor_Data, Valor_Local, Valor_Hora, Valor_Categoria, Valor_Gravidade, Valor_Descricao))
+            con.commit()
+            con.close()
 
     def Consultando (self):
         pass
 
-    def Verifica_Hora(self):
-        pass
+    def Verifica_Hora(self, hora):
+        lista_hora = hora.split(":")
+        if len(lista_hora) == 2:
+            for i in lista_hora:
+                if len(i) != 2:
+                    raise ValueError("Formato de hora inválido, por favor use (00:00)")
+        else:
+            raise ValueError("Formato de hora inválido, por favor use (00:00)")
 
-    def Verifica_Local(self):
-        pass
+    def Verifica_Local(self, local):
+        lista_local = local.split("/")
+        if len(lista_local) != 4:
+            raise ValueError("Formato de local inválido, por favor use (Estado/Cidade/Bairro/Rua)")
+        else:
+            raise ValueError("Formato de local inválido, por favor use (Estado/Cidade/Bairro/Rua)")
      
 
 if __name__ == "__main__":
