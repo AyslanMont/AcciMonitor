@@ -223,11 +223,11 @@ class App:
         self.botao_Deletar_Tudo = Button(self.janela, text="Deletar tudo", background=self.Vermelho_Aviso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Deletando_Tudo)
         self.botao_Deletar_Tudo.place(x=50, y=320,width=160, height=40)
 
-        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
+        #self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
         self.botao_Backup = Button(self.janela, text="Backup", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Fazendo_Backup)
         self.botao_Backup.place(x=220, y=320,width=160, height=40)
 
-        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
+        #self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
         self.botao_Deleta_Especifica = Button(self.janela, text="Deletar", background=self.Vermelho_Aviso,anchor=CENTER, font="Arial 15", image=self.Image_Carregada,compound = 'left',command=self.Fazendo_Deleta_Especifica)
         self.botao_Deleta_Especifica.place(x=390, y=320,width=160, height=40)
         
@@ -419,6 +419,7 @@ class App:
         banco.execute("DELETE FROM Registros")
         con.commit()
         con.close()
+        messagebox.showinfo("Sucesso!","Todos os registros foram apagados")
 
     def Fazendo_Backup(self):
         pass
