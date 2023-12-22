@@ -22,6 +22,7 @@ class App:
         self.Vermelho_Aviso = "#FF5722" 
         self.Amarelo_Alerta = "#FFC107"
         self.Branco = "White"
+        self.Verde_Claro = "#8AFFC0"
         
 
         self.Canvas_background = Canvas(self.janela, background=self.Background_da_Janela)
@@ -236,6 +237,7 @@ class App:
             self.Entry_Categoria.delete(0, END)
             self.Entry_Gravidade.delete(0, END)
             self.Entry_Descricao.delete("1.0", END)
+            messagebox.showinfo("Sucesso!", "O registro foi inserido com sucesso!")
 
     def Consultando (self):
 
@@ -248,7 +250,8 @@ class App:
             banco.execute("SELECT * FROM Registros WHERE Data = ?", (Valor_Data,))
             registros = banco.fetchall()
             for registro in registros:
-                dados.append(registro)
+                if registro not in dados:
+                    dados.append(registro)
 
         if self.Check_var_Hora.get() == 1:
             try:
@@ -260,7 +263,8 @@ class App:
                 banco.execute("SELECT * FROM Registros WHERE Hora = ?", (Valor_Hora,))
                 registros = banco.fetchall()
                 for registro in registros:
-                    dados.append(registro)
+                    if registro not in dados:
+                        dados.append(registro)
             
 
         if self.Check_var_Local.get() == 1:
@@ -273,21 +277,24 @@ class App:
                 banco.execute("SELECT * FROM Registros WHERE Local = ?", (Valor_Local,))
                 registros = banco.fetchall()
                 for registro in registros:
-                    dados.append(registro) 
+                    if registro not in dados:
+                        dados.append(registro) 
 
         if self.Check_var_Categoria.get() == 1:
             Valor_Categoria = self.Entry_Categoria.get()
             banco.execute("SELECT * FROM Registros WHERE Categoria = ?", (Valor_Categoria,))
             registros = banco.fetchall()
             for registro in registros:
-                dados.append(registro) 
+                if registro not in dados:
+                    dados.append(registro) 
 
         if self.Check_var_Gravidade.get() == 1:
             Valor_Gravidade = self.Entry_Gravidade.get()
             banco.execute("SELECT * FROM Registros WHERE Gravidade = ?", (Valor_Gravidade,))
             registros = banco.fetchall()
             for registro in registros:
-                dados.append(registro)
+                if registro not in dados:
+                    dados.append(registro)
         self.Exebindo_Dados(dados)
 
     def Verifica_Hora(self, hora):
@@ -306,12 +313,12 @@ class App:
     
     def Exebindo_Dados(self, Dados):
         toplevel = Toplevel(self.janela)
-        toplevel.geometry("500x500")
+        toplevel.geometry("500x500+500+100")
         toplevel.resizable(0,0)
 
         Caixa_de_lista = Listbox(toplevel)
         for registro in Dados:
-            registro_formatado = [f"Data: {registro[0]}", f"Local: {registro[1]}", f"Hora: {registro[2]}", f"Categoria: {registro[3]}", f"Gravidade: {registro[4]}", f"Descrição: {registro[5]}"]
+            registro_formatado = [f"Data: {registro[0]}", f"Hora: {registro[2]}", f"Local: {registro[1]}", f"Categoria: {registro[3]}", f"Gravidade: {registro[4]}", f"Descrição: {registro[5]}"]
             tamanho = len(registro_formatado)
             cont = 0
             while cont < tamanho:
@@ -321,7 +328,7 @@ class App:
 
         Caixa_de_lista.config(
         font=('Arial', 12),
-        bg='white',
+        bg=self.Verde_Claro,
         fg='black',
         selectbackground='gray', 
         selectforeground='white')
