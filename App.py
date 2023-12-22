@@ -299,10 +299,22 @@ class App:
     
     def Exebindo_Dados(self, Dados):
         toplevel = Toplevel(self.janela)
+        toplevel.geometry("500x500")
+        toplevel.resizable(0,0)
 
         Caixa_de_lista = Listbox(toplevel)
         for registro in Dados:
             Caixa_de_lista.insert("end",registro)
+        
+
+        Caixa_de_lista.config(
+        font=('Arial', 12),  # Define a fonte
+        bg='white',          # Define a cor de fundo
+        fg='black',          # Define a cor do texto
+        selectbackground='gray',  # Define a cor do item selecionado
+        selectforeground='white',  # Define a cor do texto do item selecionado
+        highlightcolor='red',
+        width=300)
         Caixa_de_lista.pack()
 
 if __name__ == "__main__":
