@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, Listbox
 from tkinter.ttk import Combobox, Checkbutton
 from tkcalendar import Calendar, DateEntry
 import sqlite3
@@ -231,7 +231,57 @@ class App:
             con.close()
 
     def Consultando (self):
-        pass
+
+        con = sqlite3.connect("Registro_de_Acidentes.db")
+        banco = con.cursor()
+        dados = []
+
+        if self.Check_var_Data.get() == 1:
+            Valor_Data = self.Entry_data.get()
+            banco.execute("SELECT * FROM Registros WHERE Data = ?", (Valor_Data,))
+            registros = banco.fetchall()
+            for registro in registros:
+                dados.append(registro)
+
+        if self.Check_var_Hora.get() == 1:
+            try:
+                Valor_Hora = self.Entry_Hora.get()
+                self.Verifica_Hora(Valor_Hora)
+            except Exception as err:
+                messagebox.showinfo("Formato inválido", f"{err}")
+            else:       
+                banco.execute("SELECT * FROM Registros WHERE Hora = ?", (Valor_Hora,))
+                registros = banco.fetchall()
+                for registro in registros:
+                    dados.append(registro)
+            
+
+        if self.Check_var_Local.get() == 1:
+            try:
+                Valor_Local = self.Entry_Local.get()
+                self.Verifica_Local(Valor_Local)
+            except Exception as err:
+                messagebox.showinfo("Formato inválido", f"{err}")
+            else:
+                banco.execute("SELECT * FROM Registros WHERE Local = ?", (Valor_Local,))
+                registros = banco.fetchall()
+                for registro in registros:
+                    dados.append(registro) 
+
+        if self.Check_var_Categoria.get() == 1:
+            Valor_Categoria = self.Entry_Categoria.get()
+            banco.execute("SELECT * FROM Registros WHERE Categoria = ?", (Valor_Categoria,))
+            registros = banco.fetchall()
+            for registro in registros:
+                dados.append(registro) 
+
+        if self.Check_var_Gravidade.get() == 1:
+            Valor_Gravidade = self.Entry_Gravidade.get()
+            banco.execute("SELECT * FROM Registros WHERE Gravidade = ?", (Valor_Gravidade,))
+            registros = banco.fetchall()
+            for registro in registros:
+                dados.append(registro)
+        self.Exebindo_Dados(dados)
 
     def Verifica_Hora(self, hora):
         lista_hora = hora.split(":")
@@ -246,9 +296,14 @@ class App:
         lista_local = local.split("/")
         if len(lista_local) != 4:
             raise ValueError("Formato de local inválido, por favor use (Estado/Cidade/Bairro/Rua)")
-        else:
-            raise ValueError("Formato de local inválido, por favor use (Estado/Cidade/Bairro/Rua)")
-     
+    
+    def Exebindo_Dados(self, Dados):
+        toplevel = Toplevel(self.janela)
+
+        Caixa_de_lista = Listbox(toplevel)
+        for registro in Dados:
+            Caixa_de_lista.insert("end",registro)
+        Caixa_de_lista.pack()
 
 if __name__ == "__main__":
     EXECUCAO = App() 
