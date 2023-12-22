@@ -230,6 +230,13 @@ class App:
             con.commit()
             con.close()
 
+            self.Entry_data.delete(0, END)
+            self.Entry_Local.delete(0, END)
+            self.Entry_Hora.delete(0, END)
+            self.Entry_Categoria.delete(0, END)
+            self.Entry_Gravidade.delete(0, END)
+            self.Entry_Descricao.delete("1.0", END)
+
     def Consultando (self):
 
         con = sqlite3.connect("Registro_de_Acidentes.db")
@@ -304,18 +311,21 @@ class App:
 
         Caixa_de_lista = Listbox(toplevel)
         for registro in Dados:
-            Caixa_de_lista.insert("end",registro)
-        
+            registro_formatado = [f"Data: {registro[0]}", f"Local: {registro[1]}", f"Hora: {registro[2]}", f"Categoria: {registro[3]}", f"Gravidade: {registro[4]}", f"Descrição: {registro[5]}"]
+            tamanho = len(registro_formatado)
+            cont = 0
+            while cont < tamanho:
+                Caixa_de_lista.insert("end",registro_formatado[cont])       
+                cont += 1
+            Caixa_de_lista.insert("end", "")     
 
         Caixa_de_lista.config(
-        font=('Arial', 12),  # Define a fonte
-        bg='white',          # Define a cor de fundo
-        fg='black',          # Define a cor do texto
-        selectbackground='gray',  # Define a cor do item selecionado
-        selectforeground='white',  # Define a cor do texto do item selecionado
-        highlightcolor='red',
-        width=300)
-        Caixa_de_lista.pack()
+        font=('Arial', 12),
+        bg='white',
+        fg='black',
+        selectbackground='gray', 
+        selectforeground='white')
+        Caixa_de_lista.pack(expand=True, fill=BOTH)
 
 if __name__ == "__main__":
     EXECUCAO = App() 
