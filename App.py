@@ -30,9 +30,9 @@ class App:
 
         #Menu Principal
         self.Menu_Principal = Menu(self.janela)
-        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
-        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
-
+        self.Menu_Principal.add_command(label="Cadastro", command=self.Exibir_Aba_Cadastro)
+        self.Menu_Principal.add_command(label="Consulta", command=self.Exibir_Aba_Consulta)
+        self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
         self.janela.config(menu=self.Menu_Principal)
 
         #Tela Inicial
@@ -47,7 +47,7 @@ class App:
         self.Menu_Principal = Menu(self.janela)
         self.Menu_Principal.add_command(label="Cadastro", command=self.Exibir_Aba_Cadastro)
         self.Menu_Principal.add_command(label="Consulta", command=self.Exibir_Aba_Consulta)
-
+        self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
         self.janela.config(menu=self.Menu_Principal)
 
         self.Label_Titulo_Informacoes = Label(self.janela, text="Informações", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
@@ -96,8 +96,9 @@ class App:
         self.Canvas_background.pack(fill="both", expand=True)
 
         self.Menu_Principal = Menu(self.janela)
-        self.Menu_Principal.add_command(label="Cadastro", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Cadastro()))
-        self.Menu_Principal.add_command(label="Consulta", command=lambda: (self.Limpar_Tela(),self.Exibir_Aba_Consulta()))
+        self.Menu_Principal.add_command(label="Cadastro", command=self.Exibir_Aba_Cadastro)
+        self.Menu_Principal.add_command(label="Consulta", command=self.Exibir_Aba_Consulta)
+        self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
         self.janela.config(menu=self.Menu_Principal)
 
         self.Label_Titulo_Informacoes = Label(self.janela, text="Cosulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
@@ -156,6 +157,80 @@ class App:
         self.botao_Consultar = Button(self.janela, text="Consultar", background=self.Branco,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Consultando)
         self.botao_Consultar.place(x=150, y=320,width=300, height=40)
 
+    def Criar_Layout_Administrador(self):
+        self.Canvas_background = Canvas(self.janela, background=self.Background_da_Janela)
+        self.Canvas_background.pack(fill="both", expand=True)
+
+        self.Menu_Principal = Menu(self.janela)
+        self.Menu_Principal.add_command(label="Cadastro", command=self.Exibir_Aba_Cadastro)
+        self.Menu_Principal.add_command(label="Consulta", command=self.Exibir_Aba_Consulta)
+        self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
+        self.janela.config(menu=self.Menu_Principal)
+
+        self.Label_Titulo_Informacoes = Label(self.janela, text="Cosulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
+        self.Label_Titulo_Informacoes.place(x=50, y=10, width=500)
+
+        self.Check_var_Data = IntVar()
+        self.botao_Check_Data = Checkbutton(self.janela, text="Data", variable=self.Check_var_Data,command=self.Atualizar_Widgets)
+        self.botao_Check_Data.place(x=50, y=60, width=84)
+
+        self.Check_var_Local = IntVar()
+        self.botao_Check_Local = Checkbutton(self.janela, text="Local", variable=self.Check_var_Local,command=self.Atualizar_Widgets)
+        self.botao_Check_Local.place(x=154, y=60, width=84)
+
+        self.Check_var_Hora = IntVar()
+        self.botao_Check_Hora = Checkbutton(self.janela, text="Hora", variable=self.Check_var_Hora,command=self.Atualizar_Widgets)
+        self.botao_Check_Hora.place(x=258, y=60, width=84)
+
+        self.Check_var_Categoria = IntVar()
+        self.botao_Check_Categoria = Checkbutton(self.janela, text="Categoria", variable=self.Check_var_Categoria,command=self.Atualizar_Widgets)
+        self.botao_Check_Categoria.place(x=362, y=60, width=84)
+
+        self.Check_var_Gravidade= IntVar()
+        self.botao_Check_Gravidade = Checkbutton(self.janela, text="Gravidade", variable=self.Check_var_Gravidade,command=self.Atualizar_Widgets )
+        self.botao_Check_Gravidade.place(x=466, y=60, width=84)
+
+        self.Label_Data = Label(self.janela, text="Data", background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Data.place(x=50, y=120, width=60, height=25)
+        self.Entry_data = DateEntry(self.janela)  
+        self.Entry_data.place(x=120, y=120, width=175, height=25)
+
+        self.Label_Hora = Label(self.janela, text="Hora", background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Hora.place(x=305, y=120, width=60, height=25)
+        self.Entry_Hora = Entry(self.janela)
+        self.Entry_Hora.place(x=375, y=120, width=175, height=25)
+
+        self.Label_Local = Label(self.janela,text="Local",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Local.place(x=50, y=165, width=60, height=25)
+        self.Entry_Local = Entry(self.janela)
+        self.Entry_Local.place(x=120, y=165, width=430, height=25)
+
+        self.Opcoes_de_Categoria = ["Colisões","Queda", "Incêndio", "Explosão", "Outro"]
+        self.Label_Categoria = Label(self.janela,text="Categoria",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Categoria.place(x=50, y=210,width=240, height=25)
+        self.Entry_Categoria = Combobox(self.janela, values=self.Opcoes_de_Categoria, font="Arial 10")
+        self.Entry_Categoria.place(x=50, y=245,width=240, height=25)
+        self.Entry_Categoria.set("Colisões")
+
+        self.Opcoes_de_Gravidade = ["Ileso", "Ferido leve", "Ferido grave", "Morto"]
+        self.Label_Gravidade = Label(self.janela,text="Gravidade",background=self.Amarelo_Alerta, font="Arial 15",anchor=CENTER)
+        self.Label_Gravidade.place(x=310, y=210,width=240, height=25)
+        self.Entry_Gravidade = Combobox(self.janela, values=self.Opcoes_de_Gravidade, font="Arial 10")
+        self.Entry_Gravidade.place(x=310, y=245,width=240, height=25)
+        self.Entry_Gravidade.set("Ileso")
+
+        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
+        self.botao_Deletar_Tudo = Button(self.janela, text="Deletar tudo", background=self.Vermelho_Aviso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Deletando_Tudo)
+        self.botao_Deletar_Tudo.place(x=50, y=320,width=160, height=40)
+
+        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
+        self.botao_Backup = Button(self.janela, text="Backup", background=self.Verde_Sucesso,anchor=CENTER, font="Arial 15",image=self.Image_Carregada,compound = 'left',command=self.Fazendo_Backup)
+        self.botao_Backup.place(x=220, y=320,width=160, height=40)
+
+        self.Image_Carregada = PhotoImage(file='assets/imgs/consulta.png')
+        self.botao_Deleta_Especifica = Button(self.janela, text="Deletar", background=self.Vermelho_Aviso,anchor=CENTER, font="Arial 15", image=self.Image_Carregada,compound = 'left',command=self.Fazendo_Deleta_Especifica)
+        self.botao_Deleta_Especifica.place(x=390, y=320,width=160, height=40)
+        
     def Exibir_Aba_Cadastro(self):
         self.Limpar_Tela()
         self.Criar_Layout_Cadastro ()
@@ -164,6 +239,10 @@ class App:
         self.Limpar_Tela()
         self.Criar_Layout_Consulta()
 
+    def Exibir_Aba_Administrador(self):
+        self.Limpar_Tela()
+        self.Criar_Layout_Administrador()
+        
     def Limpar_Tela(self):
         for widget in self.janela.winfo_children():
             widget.destroy()
@@ -334,5 +413,17 @@ class App:
         selectforeground='white')
         Caixa_de_lista.pack(expand=True, fill=BOTH)
 
+    def Deletando_Tudo(self):
+        con = sqlite3.connect("Registro_de_Acidentes.db")
+        banco = con.cursor()   
+        banco.execute("DELETE FROM Registros")
+        con.commit()
+        con.close()
+
+    def Fazendo_Backup(self):
+        pass
+
+    def Fazendo_Deleta_Especifica(self):
+        pass
 if __name__ == "__main__":
     EXECUCAO = App() 
