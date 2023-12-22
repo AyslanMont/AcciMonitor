@@ -101,7 +101,7 @@ class App:
         self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
         self.janela.config(menu=self.Menu_Principal)
 
-        self.Label_Titulo_Informacoes = Label(self.janela, text="Cosulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
+        self.Label_Titulo_Informacoes = Label(self.janela, text="Consulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
         self.Label_Titulo_Informacoes.place(x=50, y=10, width=500)
 
         self.Check_var_Data = IntVar()
@@ -167,7 +167,7 @@ class App:
         self.Menu_Principal.add_command(label="Administrador", command=self.Exibir_Aba_Administrador)
         self.janela.config(menu=self.Menu_Principal)
 
-        self.Label_Titulo_Informacoes = Label(self.janela, text="Cosulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
+        self.Label_Titulo_Informacoes = Label(self.janela, text="Consulta", background=self.Azul_Primario, font="Arial 20",anchor=CENTER)
         self.Label_Titulo_Informacoes.place(x=50, y=10, width=500)
 
         self.Check_var_Data = IntVar()
@@ -407,7 +407,7 @@ class App:
 
         Caixa_de_lista.config(
         font=('Arial', 12),
-        bg=self.Verde_Claro,
+        bg=self.Branco,
         fg='black',
         selectbackground='gray', 
         selectforeground='white')
@@ -424,9 +424,21 @@ class App:
     def Fazendo_Backup(self):
         
         arquivo = open("Arquivo_de_Registros_binario.bin",'rb')
-        Dados_Deserializados = pickle.load(arquivo)
+        Dados_Deserializados = []
+        con = sqlite3.connect("Registro_de_Acidentes.db")
+        banco = con.cursor()
+        while True:
+            try:
+                objeto = pickle.load(arquivo)
+                Dados_Deserializados.append(objeto)
+            except Exception as err:
+                break
         arquivo.close()
-        
+        for Dicionario in Dados_Deserializados:
+            banco.execute("INSERT INTO Registros VALUES (?,?,?,?,?,?)", (Dicionario["Data"], Dicionario["Local"],Dicionario["Hora"], Dicionario["Categoria"], Dicionario["Gravidade"], Dicionario["Descricao"]))
+        con.commit()
+        con.close()
+
     def Fazendo_Deleta_Especifica(self):
         pass
 if __name__ == "__main__":
