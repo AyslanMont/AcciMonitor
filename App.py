@@ -422,8 +422,11 @@ class App:
         messagebox.showinfo("Sucesso!","Todos os registros foram apagados")
 
     def Fazendo_Backup(self):
-        pass
-
+        
+        arquivo = open("Arquivo_de_Registros_binario.bin",'rb')
+        Dados_Deserializados = pickle.load(arquivo)
+        arquivo.close()
+        
     def Fazendo_Deleta_Especifica(self):
         pass
 if __name__ == "__main__":
