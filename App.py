@@ -440,6 +440,41 @@ class App:
         con.close()
 
     def Fazendo_Deleta_Especifica(self):
-        pass
+        con = sqlite3.connect("Registro_de_Acidentes.db")
+        banco = con.cursor()
+
+        if self.Check_var_Data.get() == 1:
+            Valor_Data = self.Entry_data.get()
+            banco.execute("DELETE FROM Registros WHERE Data = ?", (Valor_Data,))
+
+        if self.Check_var_Hora.get() == 1:
+            try:
+                Valor_Hora = self.Entry_Hora.get()
+                self.Verifica_Hora(Valor_Hora)
+            except Exception as err:
+                messagebox.showinfo("Formato inválido", f"{err}")
+            else:       
+                banco.execute("DELETE FROM Registros WHERE Hora = ?", (Valor_Hora,))
+            
+        if self.Check_var_Local.get() == 1:
+            try:
+                Valor_Local = self.Entry_Local.get()
+                self.Verifica_Local(Valor_Local)
+            except Exception as err:
+                messagebox.showinfo("Formato inválido", f"{err}")
+            else:
+                banco.execute("DELETE FROM Registros WHERE Local = ?", (Valor_Local,))
+
+        if self.Check_var_Categoria.get() == 1:
+            Valor_Categoria = self.Entry_Categoria.get()
+            banco.execute("DELETE FROM Registros WHERE Categoria = ?", (Valor_Categoria,))
+
+        if self.Check_var_Gravidade.get() == 1:
+            Valor_Gravidade = self.Entry_Gravidade.get()
+            banco.execute("DELETE FROM Registros WHERE Gravidade = ?", (Valor_Gravidade,))
+        con.commit()
+        con.close()
+        messagebox.showinfo("Sucesso!","Os registros foram apagados")
+
 if __name__ == "__main__":
     EXECUCAO = App() 
